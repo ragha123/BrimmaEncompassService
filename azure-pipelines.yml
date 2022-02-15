@@ -1,0 +1,216 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- 'develop'
+
+variables:
+  buildConfiguration: 'Release'
+  releaseBranchName: 'develop'
+
+stages:
+- stage: 'Build'
+  displayName: 'Build Brimma LOS Service application'
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build job'
+    pool:
+      vmImage: 'windows-latest'
+      
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core SDK'
+      inputs:
+        version: '3.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore project dependencies'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build the project - $(buildConfiguration)'
+      inputs:
+        command: 'build'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
+        projects: '**/*.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish the project - $(buildConfiguration)'
+      inputs:
+        command: 'publish'
+        projects: '**/*.csproj'
+        publishWebProjects: false
+        arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+        zipAfterPublish: true
+
+    - publish: $(Build.ArtifactStagingDirectory)
+      artifact: drop
+
+- stage: 'Dev'
+  displayName: 'Deploy Brimma LOS Service application'
+  dependsOn: Build
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+    )
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: dev
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: AzureWebApp@1
+            displayName: 'Azure App Service Deploy: website'
+            inputs:
+              azureSubscription: 'blink-dev'
+              appType: 'webApp'
+              appName: '$(encservice-dev)'
+              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*Service.zip'
+              deploymentMethod: 'auto'
+
+
+- stage: 'QA'
+  displayName: 'Deploy Brimma LOS Service application to QA Environment'
+  dependsOn: Build
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+    )
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: QA
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: AzureWebApp@1
+            displayName: 'App Service deploy to Encompass Data service QA Environment'
+            inputs:
+              azureSubscription: 'blink-qa'
+              appType: 'webApp'
+              appName: '$(encservice-qa)'
+              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*Service.zip'
+              deploymentMethod: 'auto'
+
+- stage: 'TMS'
+  displayName: 'Deploy Brimma LOS Svc to TMS QA Environment'
+  dependsOn: Build
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+    )
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: dev
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: AzureWebApp@1
+            displayName: 'Deploy Brimma LOS Svc to TMS QA Environment'
+            inputs:
+              azureSubscription: 'TMS Deployer - Windows'
+              appType: 'webApp'
+              appName: '$(eds-tms)'
+              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*Service.zip'
+              deploymentMethod: 'auto'
+
+
+
+
+
+
+
+- stage: 'TMSDev'
+  displayName: 'Deploy Brimma LOS Service application'
+  dependsOn: Build
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+    )
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: dev
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: AzureWebApp@1
+            displayName: 'Azure App Service Deploy: website'
+            inputs:
+              azureSubscription: 'docprocessor-dev'
+              appType: 'webApp'
+              appName: '$(encservice-tms-dev)'
+              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*Service.zip'
+              deploymentMethod: 'auto'              
+
+
+
+
+- stage: 'DeepHavenDev'
+  displayName: 'Deploy Brimma LOS Service application'
+  dependsOn: Build
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+    )
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: dev
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: AzureWebApp@1
+            displayName: 'Azure App Service Deploy: website'
+            inputs:
+              azureSubscription: 'sc-docprocessor-brimma-dev'
+              appType: 'webApp'
+              appName: '$(encservice-docprocessor-brimma-dev)'
+              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*Service.zip'
+              deploymentMethod: 'auto'              

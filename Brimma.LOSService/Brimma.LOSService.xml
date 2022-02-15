@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Brimma.LOSService</name>
+    </assembly>
+    <members>
+        <member name="M:Brimma.LOSService.Controllers.DocumentController.GetDocuments(System.String)">
+            <summary>
+            Retrieves loan Documents.
+            </summary>
+            <param name="loanGuid">Loan ID</param>
+            <returns>A collection of Documents for a loan.</returns>
+            <response code="200">Successfully retrieved Documents for a loan.</response>
+            <response code="404">No loan found for given loanId.</response>
+            <response code="403">Action not permitted for specified API key.</response>
+            <response code="401">Access token is missing or invalid.</response>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.GetLoan(System.String,System.String)">
+            <summary>
+            Returns the loan information.
+            </summary>
+            <param name="loanGuid">Encompass LoanGuid</param>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.UpdateLoan(System.String,System.Object)">
+            <summary>
+            Updates an existing loan by modifying the values of the loan data elements passed.
+            </summary>
+            <param name="loanGuid">The unique identifier assigned to the loan.</param>
+            <param name="request">Loan data elements to update. Request is same as Encompass loan update request.</param>
+            <returns>Returns the ID assigned to the loan.</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.CreateLoan(System.String,System.String,System.String,System.Object,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Create a new loan assigns LO and returns the created loan Guid.
+            </summary>
+            <param name="loanTemplate">loanTemplate path.Which type of template we want to create.</param>
+            <param name="loId">LO ID to which the loan will be assigned.</param>
+            <param name="loaId">LOA ID which will be assigned to the loan.</param>
+            <param name="request">Loan data elements to create a new loan. Request is same as Encompass loan create request.</param>
+            <param name="userId">User Id</param>
+            <param name="loanProgramPath">Loan program userqualifiedpath</param>
+            <param name="closingCostPath">Closing cost userqualifiedpath</param>
+            <param name="createFlow">Flow create in FLoify when it's true</param>
+            <returns>Returns the Created Loan GUID.</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.GetLoanFieldValues(System.String,System.String)">
+            <summary>
+            Returns list of fields with values
+            </summary>
+            <param name="fieldIds">field Id to return the value for it</param>
+            <param name="loanGuid">loan Id for returning the field properties of that loan</param>
+            <returns></returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.SubmitRateLock(System.Guid,Brimma.LOSService.DTO.Action,Brimma.LOSService.DTO.RateLockRequest)">
+            <summary>
+            Submit a rate lock request
+            </summary>
+            <param name="rateLockRequest">request object to extend the rate lock</param>
+            <param name="loanGuid">loan Id for returning the field properties of that loan</param>
+            /// <param name="action">actions (extend) to be performed while submitting a rate lock request</param>
+            <returns></returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.GetLoanQualifer(System.String,Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Returns the loan information for Qualifier to get the EPPS Rates.
+            </summary>
+            <param name="loanGuid">Encompass LoanGuid</param>
+            <returns></returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.UpdateLoanWithTemplate(System.String,System.String,System.String,System.String,System.Object)">
+            <summary>
+            Updates an existing loan by modifying the values of the loan data elements passed and by applying a loan template, loan program template and closing cost template.
+            </summary>
+            <param name="loanGuid">The unique identifier assigned to the loan.</param>        
+            <param name="loanTemplatePath">Path to the loan template that will be applied to the loan.</param>
+            <param name="loanProgramPath">Loan program userqualifiedpath</param>
+            <param name="closingCostPath">Closing cost userqualifiedpath</param>
+            <param name="request">Loan data elements to update. Request is same as Encompass loan update request.</param>
+            <returns>Returns the ID assigned to the loan.</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.ApplyLoanProgramClosingCost(System.String,System.String,System.String)">
+            <summary>
+            Updates an existing loan by applying a loan program template or clsoing cost template.
+            </summary>
+            <param name="loanGuid">The unique identifier assigned to the loan.</param>
+            <param name="loanProgramPath">Loan program userqualifiedpath</param>
+            <param name="closingCostPath">Closing cost userqualifiedpath</param>
+            <returns>Returns the ID assigned to the loan.</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.GetLoanV2(System.String,System.String)">
+            <summary>
+            Returns the loan information.
+            </summary>
+            <param name="loanGuid">Encompass LoanGuid</param>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Brimma.LOSService.Controllers.LoanController.UpdateLoanV2(System.String,System.Object)">
+            <summary>
+            Updates an existing loan by modifying the values of the loan data elements passed.
+            </summary>
+            <param name="loanGuid">The unique identifier assigned to the loan.</param>
+            <param name="request">Loan data elements to update. Request is same as Encompass loan update request.</param>
+            <returns>Returns the ID assigned to the loan.</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Services.DocumentService.GetDocuments(System.String)">
+            <summary>
+            Gets the Loan documents that have active(current) attachments only with these attachments
+            </summary>
+            <param name="loanGuid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Brimma.LOSService.Services.IDocumentService.GetDocuments(System.String)">
+            <summary>
+            Retrieves a loan Document details.
+            </summary>
+            <param name="loanGuid">Loan ID</param>
+            <returns>Loan Document details</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Services.IHttpService.GetAsync``1(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            HttpClient Get method
+            </summary>
+            <typeparam name="T">Generic class for Data property in ApiResponse class</typeparam>
+            <param name="apiURL">apiURL</param>
+            <param name="IsSDKAPICall">IsSDKAPICall</param>
+            <param name="isAppraisalOrderCall">isAppraisalOrderCall</param>
+            <returns>Returns Api response</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Services.IHttpService.PostAsync``1(System.String,System.Object,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            HttpClient Post method
+            </summary>
+            <typeparam name="T">Generic class for Data property in ApiResponse class</typeparam>
+            <param name="apiURL">API url</param>
+            <param name="request">request</param>
+            <param name="needHttpResponseHeader">needHttpResponseHeader</param>
+            <param name="IsSDKAPICall">IsSDKAPICall</param>
+            <param name="isAppraisalOrderCall">isAppraisalOrderCall</param>
+            <param name="isWebhookSubscriptionCall">isWebhookSubscriptionCall</param>
+            <returns>Returns Api response</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Services.IHttpService.PatchAsync``1(System.String,System.Object)">
+            <summary>
+            HttpClient Patch method
+            </summary>
+            <typeparam name="T">Generic class for Data property in ApiResponse class</typeparam>
+            <param name="apiURL">API url</param>
+            <param name="request">request</param>
+            <returns>Returns Api response</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Services.IHttpService.PutAsync``1(System.String,System.Object,System.Boolean,System.Net.Http.HttpContent,System.String)">
+            <summary>
+            HttpClient Put method
+            </summary>
+            <typeparam name="T">Generic class for Data property in ApiResponse class</typeparam>
+            <param name="apiURL">API url</param>
+            <param name="request">request</param>
+            <param name="uploadAttachment"></param>
+            <param name="httpContent"></param>
+            <param name="authorizationHeader"></param>
+            <returns>Returns Api response</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Services.IHttpService.DeleteAsync``1(System.String)">
+            <summary>
+            HttpClient Delete method
+            </summary>
+            <typeparam name="T">Generic class for Data property in ApiResponse class</typeparam>
+            <param name="apiURL">API url</param>
+            <returns>Returns Api response</returns>
+        </member>
+    </members>
+</doc>
