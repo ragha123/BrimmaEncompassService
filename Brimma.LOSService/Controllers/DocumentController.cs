@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Brimma.LOSService.Common;
 using Brimma.LOSService.Config;
@@ -28,6 +26,7 @@ namespace Brimma.LOSService.Controllers
             this.documentService = documentService;
             this.errorMessages = errorMessagesoptions.Value;
         }
+
         /// <summary>
         /// Retrieves loan Documents.
         /// </summary>
