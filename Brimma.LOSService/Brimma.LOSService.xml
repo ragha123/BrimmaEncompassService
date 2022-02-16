@@ -107,10 +107,10 @@
         </member>
         <member name="M:Brimma.LOSService.Services.DocumentService.GetDocuments(System.String)">
             <summary>
-            Gets the Loan documents that have active(current) attachments only with these attachments
+            Retrive Loan Document Details
             </summary>
             <param name="loanGuid"></param>
-            <returns></returns>
+            <returns> List of Loan Document Details</returns>
         </member>
         <member name="M:Brimma.LOSService.Services.IDocumentService.GetDocuments(System.String)">
             <summary>
