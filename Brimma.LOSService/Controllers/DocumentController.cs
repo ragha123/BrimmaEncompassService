@@ -42,7 +42,7 @@ namespace Brimma.LOSService.Controllers
         [Produces("application/json")]
         [ApiExplorerSettings(GroupName = "v1")]
         [MiddlewareFilter(typeof(CustomAuthorizationPipeline))]
-        [ProducesResponseType(typeof(IEnumerable<DocumentInfo>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<DocumentInfo>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]

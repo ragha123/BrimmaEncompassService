@@ -22,25 +22,24 @@ namespace Brimma.LOSService.Services
         }
 
         /// <summary>
-        /// Gets the Loan documents that have active(current) attachments only with these attachments
+        /// Retrive Loan Document Details
         /// </summary>
         /// <param name="loanGuid"></param>
-        /// <returns></returns>
+        /// <returns> List of Loan Document Details</returns>
         public async Task<object> GetDocuments(string loanGuid)
         {
             Object documenentResponse = new Object();
 
            var documentListResponse = await httpService.GetAsync<List<DocumentInfo>>
                                              (string.Format(encompassAPIs.RetrieveLoanDocuments, loanGuid)).ConfigureAwait(false);
+              
                 if (documentListResponse.Data != null)
                 {
                     List<DocumentInfo> documents = documentListResponse.Data;
 
                     if (documents != null )
-                    {
-
+                    { 
                     documenentResponse = documents;
-
                     }
                 }
 
@@ -51,6 +50,5 @@ namespace Brimma.LOSService.Services
             
             return documenentResponse;
         }
-
     }
 }
