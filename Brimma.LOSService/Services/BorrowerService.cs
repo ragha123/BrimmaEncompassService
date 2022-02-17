@@ -21,12 +21,12 @@ namespace Brimma.LOSService.Services
         }
 
         /// <summary>
-        /// Retrive Loan Document Details
+        /// Retrive Brrower Contact Details
         /// </summary>
-        /// <param name="request"> The </param>
+        /// <param name="request"> borrower Contact Details </param>
         /// <param name="startLimit"></param>
         /// <param name="endlimit"></param>
-        /// <returns> List of Loan Document Details</returns>
+        /// <returns> List of Borrower Contact Details</returns>
         public async Task<Object> GetBorrowerContacts(Object request, int startLimit, int endlimit)
         {
             Object response = new Object();
