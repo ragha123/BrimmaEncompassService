@@ -67,6 +67,7 @@ namespace Brimma.LOSService
             services.AddSingleton<IHttpService, HttpService>();
             services.AddScoped<ILoanService, LoanService>();
             services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IBorrowerService, BorrowerService>();
             services.AddTransient<SaveNLog, SaveNLog>();
             services.AddTransient<AsymmetricRSAAlgorithm, AsymmetricRSAAlgorithm>();
             services.AddTransient<IApplicationInsights, ApplicationInsights>();

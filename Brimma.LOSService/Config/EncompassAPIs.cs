@@ -90,5 +90,6 @@
         public string UpdateBusinessContact { get; set; }
         public string AssignAttachmentV3 { get; set; }
         public string UpdateAttachmentV3 { get; set; }
+        public string RetrieveBorrowerContacts { get; set; }
     }
 }

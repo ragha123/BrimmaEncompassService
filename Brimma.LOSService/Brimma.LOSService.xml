@@ -4,6 +4,13 @@
         <name>Brimma.LOSService</name>
     </assembly>
     <members>
+        <member name="M:Brimma.LOSService.Controllers.BorrowerController.GetBorrowerContacts(System.Object,System.Int32,System.Int32)">
+            <summary>
+            Returns list of Borrower Contacts
+            </summary>
+            <param name="request"></param>
+            <returns>List of Borrower Contacts</returns>
+        </member>
         <member name="M:Brimma.LOSService.Controllers.DocumentController.GetDocuments(System.String)">
             <summary>
             Retrieves loan Documents.
@@ -104,6 +111,13 @@
             <param name="loanGuid">The unique identifier assigned to the loan.</param>
             <param name="request">Loan data elements to update. Request is same as Encompass loan update request.</param>
             <returns>Returns the ID assigned to the loan.</returns>
+        </member>
+        <member name="M:Brimma.LOSService.Services.BorrowerService.GetBorrowerContacts(System.Object,System.Int32,System.Int32)">
+            <summary>
+            Retrive Loan Document Details
+            </summary>
+            <param name="loanGuid"></param>
+            <returns> List of Loan Document Details</returns>
         </member>
         <member name="M:Brimma.LOSService.Services.DocumentService.GetDocuments(System.String)">
             <summary>

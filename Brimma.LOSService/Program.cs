@@ -52,6 +52,7 @@ namespace Brimma.LOSService
                             config.AddAzureKeyVault(builtConfig["AzureKeyVault:AccountEndpoint"]);
                         }
                     }
+
                     catch (Exception ex)
                     {
                         //NLog: catch setup errors
